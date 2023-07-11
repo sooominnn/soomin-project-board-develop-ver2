@@ -18,8 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HomeController {
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
+    /**
+     * 회원가입 페이지 출력 요청
+     *
+     * @return 회원가입 페이지
+     */
+    @GetMapping("/member/save")
+    public String saveForm() {
+
+        return "save";
     }
 }
