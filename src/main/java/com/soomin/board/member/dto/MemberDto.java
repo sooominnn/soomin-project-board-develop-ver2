@@ -1,6 +1,8 @@
 package com.soomin.board.member.dto;
 
-import lombok.*;
+import com.soomin.board.member.entity.MemberEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * fileName     : MemberDto
@@ -14,13 +16,25 @@ import lombok.*;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class MemberDto {
 
     private Long    id;                 // 회원 고유번호
     private String  memberEmail;        // 회원 이메일
     private String  memberPassword;     // 회원 비밀번호
     private String  memberName;         // 회원 이름
+
+    /**
+     * entity -> dto 변환
+     *
+     * @param   memberEntity    회원 entity
+     * @return  회원 entity
+     */
+    public static MemberDto toMemberDTO(MemberEntity memberEntity) {
+        MemberDto memberDTO = new MemberDto();
+        memberDTO.setId(memberEntity.getId());
+        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDTO.setMemberName(memberEntity.getMemberName());
+        return memberDTO;
+    }
 }
