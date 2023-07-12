@@ -19,7 +19,7 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
-//@Table(name = "member_table")
+@Table(name = "member_table")
 public class MemberEntity {
 
     @Id
