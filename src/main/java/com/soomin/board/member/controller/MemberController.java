@@ -3,6 +3,7 @@ package com.soomin.board.member.controller;
 import com.soomin.board.member.dto.MemberDto;
 import com.soomin.board.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * -----------------------------------------------------------
  * 2023/07/07       lia          최초 생성
  */
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -78,6 +79,7 @@ public class MemberController {
         if (loginResult != null) {
             // 로그인 성공
             session.setAttribute("loginEmail", loginResult.getMemberEmail());
+//            System.out.println("세션 값: " + session.getAttribute("loginEmail"));
             return "main";
         } else {
             // 로그인 실패
