@@ -3,9 +3,11 @@ package com.soomin.board.member.controller;
 import com.soomin.board.member.dto.MemberDto;
 import com.soomin.board.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * fileName     : MemberController
@@ -81,6 +83,20 @@ public class MemberController {
             // 로그인 실패
             return "login";
         }
+    }
+
+    /**
+     * 회원 목록 페이지 출력
+     *
+     * @param   model           model
+     * @return  회원 목록 페이지
+     */
+    @GetMapping("/member/")
+    public String findAll(Model model) {
+        List<MemberDto> memberDtoList = memberService.findAll();
+        // 어떠한 html로 가져갈 데이터가 있다면 model 사용
+        model.addAttribute("memberList", memberDtoList);
+        return "list";
     }
 
 }

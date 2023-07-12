@@ -6,6 +6,8 @@ import com.soomin.board.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -65,5 +67,22 @@ public class MemberService {
                 // 조회 결과가 없다(해당 이메일을 가진 회원이 없다)
                 return null;
             }
+    }
+
+    /**
+     * 회원 리스트
+     *
+     * @return  회원 리스트
+     */
+    public List<MemberDto> findAll() {
+
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        List<MemberDto> memberDtoList = new ArrayList<>();
+        for (MemberEntity memberEntity: memberEntityList) {
+            memberDtoList.add(MemberDto.toMemberDTO(memberEntity));
+//            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
+//            memberDtoList.add(memberDto);
+        }
+        return memberDtoList;
     }
 }
