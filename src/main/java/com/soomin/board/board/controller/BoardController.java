@@ -78,4 +78,32 @@ public class BoardController {
         model.addAttribute("board", boardDto);
         return "boardDetail";
     }
+
+    /**
+     * 게시글 수정 페이지 출력
+     *
+     * @param   id                  회원 고유번호
+     * @param   model               model
+     * @return  게시글 수정 페이지 출력
+     */
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        BoardDto boardDto = boardService.findById(id);
+        model.addAttribute("boardUpdate", boardDto);
+        return "boardUpdate";
+    }
+
+    /**
+     * 게시글 수정
+     *
+     * @param   boardDto    게시글 정보
+     * @param   model       model
+     * @return  수정 결과
+     */
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDto boardDto, Model model) {
+        BoardDto board = boardService.update(boardDto);
+        model.addAttribute("board", board);
+        return "boardDetail";
+    }
 }

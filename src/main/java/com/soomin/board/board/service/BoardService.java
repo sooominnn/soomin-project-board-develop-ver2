@@ -67,4 +67,16 @@ public class BoardService {
             return null;
         }
     }
+
+    /**
+     * 게시글 수정
+     *
+     * @param   boardDto    게시글 정보
+     * @return  수정 결과
+     */
+    public BoardDto update(BoardDto boardDto) {
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
+        boardRepository.save(boardEntity);
+        return findById(boardDto.getId());
+    }
 }
