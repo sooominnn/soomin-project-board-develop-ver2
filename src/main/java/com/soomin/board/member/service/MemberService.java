@@ -44,45 +44,60 @@ public class MemberService {
     /**
      * 로그인
      *
-     * @param   memberDto   회원 정보
-     * @return  로그인 결과
+     * @param memberDto 회원 정보
+     * @return 로그인 결과
      */
     public MemberDto login(MemberDto memberDto) {
         // 1. 회원이 입력한 이메일로 DB 에서 조회
         // 2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단
-            Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDto.getMemberEmail());
-            if (byMemberEmail.isPresent()) {
-                // 조회 결과가 있다(해당 이메일을 가진 회원 정보가 있다)
-                MemberEntity memberEntity = byMemberEmail.get();
-                if (memberEntity.getMemberPassword().equals(memberDto.getMemberPassword())) {
-                    // 비밀번호 일치
-                    // entity -> dto 변환 후 리턴
-                    MemberDto dto = MemberDto.toMemberDTO(memberEntity);
-                    return dto;
-                } else {
-                    // 비밀번호 불일치(로그인실패)
-                    return null;
-                }
+        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDto.getMemberEmail());
+        if (byMemberEmail.isPresent()) {
+            // 조회 결과가 있다(해당 이메일을 가진 회원 정보가 있다)
+            MemberEntity memberEntity = byMemberEmail.get();
+            if (memberEntity.getMemberPassword().equals(memberDto.getMemberPassword())) {
+                // 비밀번호 일치
+                // entity -> dto 변환 후 리턴
+                MemberDto dto = MemberDto.toMemberDTO(memberEntity);
+                return dto;
             } else {
-                // 조회 결과가 없다(해당 이메일을 가진 회원이 없다)
+                // 비밀번호 불일치(로그인실패)
                 return null;
             }
+        } else {
+            // 조회 결과가 없다(해당 이메일을 가진 회원이 없다)
+            return null;
+        }
     }
 
     /**
      * 회원 리스트
      *
-     * @return  회원 리스트
+     * @return 회원 리스트
      */
     public List<MemberDto> findAll() {
 
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDto> memberDtoList = new ArrayList<>();
-        for (MemberEntity memberEntity: memberEntityList) {
+        for (MemberEntity memberEntity : memberEntityList) {
             memberDtoList.add(MemberDto.toMemberDTO(memberEntity));
 //            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
 //            memberDtoList.add(memberDto);
         }
         return memberDtoList;
+    }
+
+    /**
+     * 회원 조회
+     *
+     * @param id 회원 고유번호
+     * @return 회원 조회 결과
+     */
+    public MemberDto findById(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDto.toMemberDTO(optionalMemberEntity.get());
+        } else {
+            return null;
+        }
     }
 }

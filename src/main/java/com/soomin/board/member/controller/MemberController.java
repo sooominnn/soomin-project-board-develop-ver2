@@ -99,4 +99,18 @@ public class MemberController {
         return "list";
     }
 
+    /**
+     * 회원 조회
+     *
+     * @param   id          회원 고유번호
+     * @param   model       model
+     * @return  회원 조회 결과
+     */
+    @GetMapping("/member/{id}")
+    public String findById(@PathVariable Long id, Model model) {
+        MemberDto memberDto = memberService.findById(id);
+        model.addAttribute("member", memberDto);
+        return "detail";
+    }
+
 }
