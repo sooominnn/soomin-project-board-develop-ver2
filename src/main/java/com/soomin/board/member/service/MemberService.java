@@ -136,4 +136,22 @@ public class MemberService {
 
         memberRepository.deleteById(id);
     }
+
+    /**
+     * 이메일 중복 체크
+     *
+     * @param   memberEmail         이메일
+     * @return  이메일 중복 체크 결과
+     */
+    public String emailCheck(String memberEmail) {
+
+        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberEmail);
+        if (byMemberEmail.isPresent()) {
+            // 조회결과가 있으면 -> 사용 불가능
+            return null;
+        } else {
+            // 조회결과가 없으면 -> 사용 가능
+            return "ok";
+        }
+    }
 }

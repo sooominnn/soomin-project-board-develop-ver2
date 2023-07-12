@@ -163,4 +163,18 @@ public class MemberController {
         session.invalidate();
         return "index";
     }
+
+    /**
+     * 이메일 중복 체크
+     *
+     * @param   memberEmail     이메일
+     * @return  중복 체크 결과
+     */
+    @PostMapping("/member/email-check")
+    public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail) {
+        System.out.println("memberEmail = " + memberEmail);
+        String checkResult = memberService.emailCheck(memberEmail);
+
+        return checkResult;
+    }
 }
