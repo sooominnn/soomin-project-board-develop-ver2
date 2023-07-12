@@ -1,6 +1,9 @@
 package com.soomin.board.board.controller;
 
 import com.soomin.board.board.dto.BoardDto;
+import com.soomin.board.board.service.BoardService;
+import com.soomin.board.comment.dto.CommentDto;
+import com.soomin.board.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +29,8 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
 
-    private final com.soomin.board.board.service.BoardService boardService;
+    private final BoardService boardService;
+    private final CommentService commentService;
 
     /**
      * 게시글 작성 페이지 출력
@@ -79,6 +83,9 @@ public class BoardController {
         //해당 게시글 조회수 하나 올리고 -> 게시글 데이터 가져와서 detail.html에 출력
         boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
+        // 댓글 목록 가져오기
+        List<CommentDto> commentDtoList = commentService.findAll(id);
+        model.addAttribute("commentList", commentDtoList);
         model.addAttribute("board", boardDto);
         model.addAttribute("page", pageable.getPageNumber());
         return "boardDetail";
