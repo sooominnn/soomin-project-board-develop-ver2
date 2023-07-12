@@ -2,6 +2,9 @@ package com.soomin.board.board.controller;
 
 import com.soomin.board.board.dto.BoardDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,17 +68,19 @@ public class BoardController {
     /**
      * 게시글 상세 조회
      *
-     * @param   id      게시글 고유번호
-     * @param   model   model
+     * @param   id          게시글 고유번호
+     * @param   model       model
+     * @param   pageable    pageable
      * @return  조회 결과
      */
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, Model model, @PageableDefault(page=1) Pageable pageable) {
 
         //해당 게시글 조회수 하나 올리고 -> 게시글 데이터 가져와서 detail.html에 출력
         boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
         model.addAttribute("board", boardDto);
+        model.addAttribute("page", pageable.getPageNumber());
         return "boardDetail";
     }
 
@@ -105,5 +110,37 @@ public class BoardController {
         BoardDto board = boardService.update(boardDto);
         model.addAttribute("board", board);
         return "boardDetail";
+    }
+
+    /**
+     * 게시글 삭제
+     *
+     * @param   id      게시글 고유번호
+     * @return  삭제 결과
+     */
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        boardService.delete(id);
+        return "redirect:/board/";
+    }
+
+    /**
+     * 페이징 처리
+     *
+     * @param   pageable        pageable
+     * @param   model           model
+     * @return  페이징 처리 결과
+     */
+    @GetMapping("/paging")
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+        Page<BoardDto> boardList = boardService.paging(pageable);
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "paging";
     }
 }

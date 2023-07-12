@@ -39,8 +39,17 @@ public class BoardDto {
         boardDto.setBoardTitle(boardEntity.getBoardTitle());
         boardDto.setBoardContents(boardEntity.getBoardContents());
         boardDto.setBoardHits(boardEntity.getBoardHits());
-        boardDto.setBoardCreatedTime(boardEntity.getCreatedTime());
-        boardDto.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+        boardDto.setBoardCreatedTime(boardEntity.getBoardCreatedTime());
+        boardDto.setBoardUpdatedTime(boardEntity.getBoardUpdatedTime());
         return boardDto;
+    }
+
+    // 생성자 추가
+    public BoardDto(Long id, String boardWriter, String boardTitle, int boardHits, LocalDateTime boardCreatedTime) {
+        this.id = id;
+        this.boardWriter = boardWriter;
+        this.boardTitle = boardTitle;
+        this.boardHits = boardHits;
+        this.boardCreatedTime = boardCreatedTime;
     }
 }
