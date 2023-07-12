@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * fileName     : BoardService
@@ -37,5 +38,33 @@ public class BoardService {
             boardDTOList.add(BoardDto.toBoardDto(boardEntity));
         }
         return boardDTOList;
+    }
+
+    /**
+     * 게시글 조회수 업데이트
+     *
+     * @param id 게시글 고유번호
+     */
+    public void updateHits(Long id) {
+
+        boardRepository.updateHits(id);
+    }
+
+    /**
+     * 게시글 고유번호로 게시글 조회
+     *
+     * @param   id  게시글 고유번호
+     * @return  조회 결과
+     */
+    public BoardDto findById(Long id) {
+
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+        if (optionalBoardEntity.isPresent()) {
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDto boardDto = BoardDto.toBoardDto(boardEntity);
+            return boardDto;
+        } else {
+            return null;
+        }
     }
 }
