@@ -30,11 +30,11 @@ public class MemberDto {
      * @return  회원 entity
      */
     public static MemberDto toMemberDto(MemberEntity memberEntity) {
-        MemberDto memberDTO = new MemberDto();
-        memberDTO.setId(memberEntity.getId());
-        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
-        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
-        memberDTO.setMemberName(memberEntity.getMemberName());
-        return memberDTO;
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId(memberEntity.getId());
+        memberDto.setMemberEmail(memberEntity.getMemberEmail());
+        memberDto.setMemberPassword(memberEntity.getMemberPassword());
+        memberDto.setMemberName(memberEntity.getMemberName());
+        return memberDto;
     }
 }
