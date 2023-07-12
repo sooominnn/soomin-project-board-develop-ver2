@@ -151,4 +151,16 @@ public class MemberController {
         memberService.deleteById(id);
         return "redirect:/member/";
     }
+
+    /**
+     * 로그아웃
+     *
+     * @param   session     httpSession
+     * @return  로그아웃 결과
+     */
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
 }
