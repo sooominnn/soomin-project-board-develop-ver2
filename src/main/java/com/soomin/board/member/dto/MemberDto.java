@@ -29,7 +29,7 @@ public class MemberDto {
      * @param   memberEntity    회원 entity
      * @return  회원 entity
      */
-    public static MemberDto toMemberDTO(MemberEntity memberEntity) {
+    public static MemberDto toMemberDto(MemberEntity memberEntity) {
         MemberDto memberDTO = new MemberDto();
         memberDTO.setId(memberEntity.getId());
         memberDTO.setMemberEmail(memberEntity.getMemberEmail());

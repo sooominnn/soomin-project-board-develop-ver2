@@ -57,7 +57,7 @@ public class MemberService {
             if (memberEntity.getMemberPassword().equals(memberDto.getMemberPassword())) {
                 // 비밀번호 일치
                 // entity -> dto 변환 후 리턴
-                MemberDto dto = MemberDto.toMemberDTO(memberEntity);
+                MemberDto dto = MemberDto.toMemberDto(memberEntity);
                 return dto;
             } else {
                 // 비밀번호 불일치(로그인실패)
@@ -79,7 +79,7 @@ public class MemberService {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
         List<MemberDto> memberDtoList = new ArrayList<>();
         for (MemberEntity memberEntity : memberEntityList) {
-            memberDtoList.add(MemberDto.toMemberDTO(memberEntity));
+            memberDtoList.add(MemberDto.toMemberDto(memberEntity));
 //            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
 //            memberDtoList.add(memberDto);
         }
@@ -95,9 +95,35 @@ public class MemberService {
     public MemberDto findById(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
         if (optionalMemberEntity.isPresent()) {
-            return MemberDto.toMemberDTO(optionalMemberEntity.get());
+            return MemberDto.toMemberDto(optionalMemberEntity.get());
         } else {
             return null;
         }
+    }
+
+    /**
+     * 이메일로 회원 정보 조회
+     *
+     * @param   myEmail 이메일
+     * @return  조회 결과
+     */
+    public MemberDto updateForm(String myEmail) {
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(myEmail);
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDto.toMemberDto(optionalMemberEntity.get());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param memberDto 회원 정보
+     */
+    public void update(MemberDto memberDto) {
+
+        memberRepository.save(MemberEntity.toUpdateMemberEntity(memberDto));
     }
 }

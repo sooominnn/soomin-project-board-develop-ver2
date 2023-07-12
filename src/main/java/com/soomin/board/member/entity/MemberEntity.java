@@ -38,14 +38,29 @@ public class MemberEntity {
     /**
      * Dto -> Entity 변환
      *
-     * @param   memberDTO       회원 정보
+     * @param   memberDto       회원 정보
      * @return  member entity
      */
-    public static MemberEntity toMemberEntity(MemberDto memberDTO) {
+    public static MemberEntity toMemberEntity(MemberDto memberDto) {
         MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
-        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
-        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberEmail(memberDto.getMemberEmail());
+        memberEntity.setMemberPassword(memberDto.getMemberPassword());
+        memberEntity.setMemberName(memberDto.getMemberName());
+        return memberEntity;
+    }
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param   memberDto   회원 정보
+     * @return  수정 결과
+     */
+    public static MemberEntity toUpdateMemberEntity(MemberDto memberDto) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDto.getId());
+        memberEntity.setMemberEmail(memberDto.getMemberEmail());
+        memberEntity.setMemberPassword(memberDto.getMemberPassword());
+        memberEntity.setMemberName(memberDto.getMemberName());
         return memberEntity;
     }
 }

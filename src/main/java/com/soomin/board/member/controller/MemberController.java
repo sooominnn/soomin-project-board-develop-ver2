@@ -113,4 +113,30 @@ public class MemberController {
         return "detail";
     }
 
+    /**
+     * 회원 수정 페이지 출력
+     *
+     * @param   session         httpSession
+     * @param   model           model
+     * @return  회원 수정 페이지
+     */
+    @GetMapping("/member/update")
+    public String updateForm(HttpSession session, Model model) {
+        String myEmail = (String) session.getAttribute("loginEmail");
+        MemberDto memberDto = memberService.updateForm(myEmail);
+        model.addAttribute("updateMember", memberDto);
+        return "update";
+    }
+
+    /**
+     * 회원 수정
+     *
+     * @param   memberDto   회원 정보
+     * @return  회원 수정 결과
+     */
+    @PostMapping("/member/update")
+    public String update(@ModelAttribute MemberDto memberDto) {
+        memberService.update(memberDto);
+        return "redirect:/member/" + memberDto.getId();
+    }
 }
