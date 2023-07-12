@@ -126,4 +126,14 @@ public class MemberService {
 
         memberRepository.save(MemberEntity.toUpdateMemberEntity(memberDto));
     }
+
+    /**
+     * 회원 정보 삭제
+     *
+     * @param id    회원 고유번호
+     */
+    public void deleteById(Long id) {
+
+        memberRepository.deleteById(id);
+    }
 }

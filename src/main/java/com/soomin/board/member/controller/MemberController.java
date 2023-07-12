@@ -139,4 +139,16 @@ public class MemberController {
         memberService.update(memberDto);
         return "redirect:/member/" + memberDto.getId();
     }
+
+    /**
+     * 회원 삭제
+     *
+     * @param   id          회원 고유번호
+     * @return  회원 삭제 결과
+     */
+    @GetMapping("/member/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        memberService.deleteById(id);
+        return "redirect:/member/";
+    }
 }
