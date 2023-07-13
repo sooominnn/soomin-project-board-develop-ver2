@@ -2,6 +2,7 @@ package com.soomin.board.comment.entity;
 
 import com.soomin.board.board.entity.BoardEntity;
 import com.soomin.board.comment.dto.CommentDto;
+import com.soomin.board.member.entity.MemberEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +34,11 @@ public class CommentEntity {
     @Column
     private String commentContents;
 
-    /* Board:Comment = 1:N */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;

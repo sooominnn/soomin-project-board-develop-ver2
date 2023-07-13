@@ -1,10 +1,14 @@
 package com.soomin.board.member.entity;
 
+import com.soomin.board.board.entity.BoardEntity;
+import com.soomin.board.comment.entity.CommentEntity;
 import com.soomin.board.member.dto.MemberDto;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * fileName     : MemberEntity
@@ -34,6 +38,13 @@ public class MemberEntity {
 
     @Column
     private String  memberName;     // 회원 이름
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardEntity> boardEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
 
     /**
      * Dto -> Entity 변환
