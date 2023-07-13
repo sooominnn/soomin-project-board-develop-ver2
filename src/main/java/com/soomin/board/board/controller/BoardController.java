@@ -113,7 +113,7 @@ public class BoardController {
      * @param   model       model
      * @return  수정 결과
      */
-    @PatchMapping("/update")
+    @PostMapping("/update")
     public String update(@ModelAttribute BoardDto boardDto, Model model) {
         BoardDto board = boardService.update(boardDto);
         model.addAttribute("board", board);
@@ -126,7 +126,7 @@ public class BoardController {
      * @param   id      게시글 고유번호
      * @return  삭제 결과
      */
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         boardService.delete(id);
         return "redirect:/board/";
