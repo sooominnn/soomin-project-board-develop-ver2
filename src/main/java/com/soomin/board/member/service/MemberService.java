@@ -80,8 +80,6 @@ public class MemberService {
         List<MemberDto> memberDtoList = new ArrayList<>();
         for (MemberEntity memberEntity : memberEntityList) {
             memberDtoList.add(MemberDto.toMemberDto(memberEntity));
-//            MemberDto memberDto = MemberDto.toMemberDto(memberEntity);
-//            memberDtoList.add(memberDto);
         }
         return memberDtoList;
     }

@@ -1,10 +1,13 @@
 package com.soomin.board.board.entity;
 
 import com.soomin.board.board.dto.BoardDto;
+import com.soomin.board.comment.entity.CommentEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * fileName     : BoardEntity
@@ -40,6 +43,9 @@ public class BoardEntity extends BaseEntity{
 
     @Column
     private int boardHits;
+
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     public static BoardEntity toSaveEntity(BoardDto boardDto) {
         BoardEntity boardEntity = new BoardEntity();

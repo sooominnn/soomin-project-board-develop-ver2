@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -49,7 +50,7 @@ public class BoardController {
      * @return  작성 결과
      */
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDto boardDto) {
+    public String save(@ModelAttribute BoardDto boardDto) throws IOException {
         System.out.println("boardDto = " + boardDto);
         boardService.save(boardDto);
         return "boardIndex";
@@ -112,7 +113,7 @@ public class BoardController {
      * @param   model       model
      * @return  수정 결과
      */
-    @PostMapping("/update")
+    @PatchMapping("/update")
     public String update(@ModelAttribute BoardDto boardDto, Model model) {
         BoardDto board = boardService.update(boardDto);
         model.addAttribute("board", board);
@@ -125,7 +126,7 @@ public class BoardController {
      * @param   id      게시글 고유번호
      * @return  삭제 결과
      */
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         boardService.delete(id);
         return "redirect:/board/";

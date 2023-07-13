@@ -1,4 +1,4 @@
-package com.soomin.board.board.controller;
+package com.soomin.board.home.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +18,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String index() {
-        return "boardIndex";
+        return "index";
     }
 }
