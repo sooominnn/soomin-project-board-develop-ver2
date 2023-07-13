@@ -9,7 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +32,13 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public void save(BoardDto boardDto) {
+    public void save(BoardDto boardDto) throws IOException {
 
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto);
         boardRepository.save(boardEntity);
     }
 
+    @Transactional
     public List<BoardDto> findAll() {
 
         List<BoardEntity> boardEntityList = boardRepository.findAll();
@@ -51,6 +54,7 @@ public class BoardService {
      *
      * @param id 게시글 고유번호
      */
+    @Transactional
     public void updateHits(Long id) {
 
         boardRepository.updateHits(id);
@@ -61,7 +65,9 @@ public class BoardService {
      *
      * @param   id  게시글 고유번호
      * @return  조회 결과
+
      */
+    @Transactional
     public BoardDto findById(Long id) {
 
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
@@ -80,6 +86,7 @@ public class BoardService {
      * @param   boardDto    게시글 정보
      * @return  수정 결과
      */
+    @Transactional
     public BoardDto update(BoardDto boardDto) {
 
         BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDto);
@@ -92,6 +99,7 @@ public class BoardService {
      *
      * @param id    게시글 고유번호
      */
+    @Transactional
     public void delete(Long id) {
 
         boardRepository.deleteById(id);
@@ -103,6 +111,7 @@ public class BoardService {
      * @param   pageable        pageable
      * @return  페이징 처리 결과
      */
+    @Transactional
     public Page<BoardDto> paging(Pageable pageable) {
 
         int page = pageable.getPageNumber() - 1;
