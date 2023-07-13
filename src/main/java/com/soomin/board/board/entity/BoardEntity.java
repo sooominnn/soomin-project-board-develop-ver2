@@ -2,6 +2,7 @@ package com.soomin.board.board.entity;
 
 import com.soomin.board.board.dto.BoardDto;
 import com.soomin.board.comment.entity.CommentEntity;
+import com.soomin.board.member.entity.MemberEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,6 +47,10 @@ public class BoardEntity extends BaseEntity{
 
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
 
     public static BoardEntity toSaveEntity(BoardDto boardDto) {
         BoardEntity boardEntity = new BoardEntity();
