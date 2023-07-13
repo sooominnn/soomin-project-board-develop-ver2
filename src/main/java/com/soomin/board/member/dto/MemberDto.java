@@ -1,8 +1,7 @@
 package com.soomin.board.member.dto;
 
 import com.soomin.board.member.entity.MemberEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * fileName     : MemberDto
@@ -16,6 +15,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class MemberDto {
 
     private Long    id;                 // 회원 고유번호
